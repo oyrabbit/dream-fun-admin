@@ -6,8 +6,9 @@ import (
 )
 
 type Category struct {
-	ID   uint   `gorm:"primary_key;auto_increment" json:"id"`
-	Name string `gorm:"type:varchar(20);not null" json:"name"`
+	ID          uint   `gorm:"primary_key;auto_increment" json:"id"`
+	Name        string `gorm:"type:varchar(20);not null" json:"name"`
+	FCategoryId uint   `gorm:"not null" json:"f_category_id"`
 }
 
 // CheckCategory 查询分类是否存在
