@@ -8,13 +8,13 @@ import (
 	"strconv"
 )
 
-// AddCategory 添加分类
-func AddCategory(c *gin.Context) {
-	var data model.Category
+// AddFCategory 添加分类
+func AddFCategory(c *gin.Context) {
+	var data model.FCategory
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckCategory(data.Name)
+	code := model.CheckFCategory(data.Name)
 	if code == errmsg.SUCCSE {
-		model.CreateCate(&data)
+		model.CreateFCate(&data)
 	}
 
 	c.JSON(
@@ -27,10 +27,10 @@ func AddCategory(c *gin.Context) {
 }
 
 // GetCateInfo 查询分类信息
-func GetCateInfo(c *gin.Context) {
+func GetFCateInfo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	data, code := model.GetCateInfo(id)
+	data, code := model.GetFCateInfo(id)
 
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -39,13 +39,14 @@ func GetCateInfo(c *gin.Context) {
 			"message": errmsg.GetErrMsg(code),
 		},
 	)
+
 }
 
-// GetCate 查询分类列表
-func GetCate(c *gin.Context) {
+// GetFCate 查询分类列表
+func GetFCate(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
-	cateName := c.Query("catename")
+	fCateName := c.Query("fcatename")
 
 	switch {
 	case pageSize >= 100:
@@ -58,39 +59,8 @@ func GetCate(c *gin.Context) {
 		pageNum = 1
 	}
 
-	data := model.GetCate(pageSize, pageNum, cateName)
-	code := errmsg.SUCCSE
-	c.JSON(
-		http.StatusOK, gin.H{
-			"status": code,
-			"data":   data,
-			//"total":   data.total,
-			"message": errmsg.GetErrMsg(code),
-		},
-	)
-}
+	data, _ := model.GetFCate(pageSize, pageNum, fCateName)
 
-// GetAllCate 查询前台分类列表
-func GetAllCate(c *gin.Context) {
-
-	data := model.GetAllCate()
-	code := errmsg.SUCCSE
-	c.JSON(
-		http.StatusOK, gin.H{
-			"status": code,
-			"data":   data,
-			//"total":   data.total,
-			"message": errmsg.GetErrMsg(code),
-		},
-	)
-}
-
-// GetCate 查询分类列表
-func GetCateByFid(c *gin.Context) {
-
-	fCateId, _ := strconv.Atoi(c.Query("fcateid"))
-
-	data := model.GetCateByFid(fCateId)
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -103,10 +73,10 @@ func GetCateByFid(c *gin.Context) {
 }
 
 // 查询单个分类
-//func GetCateInfo(c *gin.Context)  {
+//func GetFCateInfo(c *gin.Context)  {
 //	id, _ := strconv.Atoi(c.Param("id"))
 //
-//	data,code := model.GetCateInfo(id)
+//	data,code := model.GetFCateInfo(id)
 //
 //	c.JSON(http.StatusOK, gin.H{
 //		"status":  code,
@@ -116,11 +86,17 @@ func GetCateByFid(c *gin.Context) {
 //}
 
 // EditCate 编辑分类名
-func EditCate(c *gin.Context) {
-	var data model.Category
+func EditFCate(c *gin.Context) {
+	var data model.FCategory
 	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
-	code := model.EditCate(id, &data)
+	code := model.CheckFCategory(data.Name)
+	if code == errmsg.SUCCSE {
+		model.EditFCate(id, &data)
+	}
+	if code == errmsg.ERROR_CATENAME_USED {
+		c.Abort()
+	}
 
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -130,11 +106,11 @@ func EditCate(c *gin.Context) {
 	)
 }
 
-// DeleteCate 删除用户
-func DeleteCate(c *gin.Context) {
+// DeleteFCate 删除用户
+func DeleteFCate(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	code := model.DeleteCate(id)
+	code := model.DeleteFCate(id)
 
 	c.JSON(
 		http.StatusOK, gin.H{

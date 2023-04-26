@@ -64,10 +64,10 @@ func GetUsers(username string, pageSize int, pageNum int) ([]User, int64) {
 
 	if username != "" {
 		db.Select("id,username,role,created_at").Where(
-			"username LIKE ?", username+"%",
+			"username LIKE ?", "%"+username+"%",
 		).Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
 		db.Model(&users).Where(
-			"username LIKE ?", username+"%",
+			"username LIKE ?", "%"+username+"%",
 		).Count(&total)
 		return users, total
 	}

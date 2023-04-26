@@ -8,13 +8,13 @@ import (
 	"strconv"
 )
 
-// AddCategory 添加分类
-func AddCategory(c *gin.Context) {
-	var data model.Category
+// AddWebsite 添加分类
+func AddWebsite(c *gin.Context) {
+	var data model.Website
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckCategory(data.Name)
+	code := model.CheckWebsite(data.Name)
 	if code == errmsg.SUCCSE {
-		model.CreateCate(&data)
+		model.CreateWebsite(&data)
 	}
 
 	c.JSON(
@@ -27,10 +27,10 @@ func AddCategory(c *gin.Context) {
 }
 
 // GetCateInfo 查询分类信息
-func GetCateInfo(c *gin.Context) {
+func GetWebsiteInfo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	data, code := model.GetCateInfo(id)
+	data, code := model.GetWebsiteInfo(id)
 
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -39,13 +39,14 @@ func GetCateInfo(c *gin.Context) {
 			"message": errmsg.GetErrMsg(code),
 		},
 	)
+
 }
 
 // GetCate 查询分类列表
-func GetCate(c *gin.Context) {
+func GetWebsite(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
-	cateName := c.Query("catename")
+	webName := c.Query("webname")
 
 	switch {
 	case pageSize >= 100:
@@ -58,45 +59,28 @@ func GetCate(c *gin.Context) {
 		pageNum = 1
 	}
 
-	data := model.GetCate(pageSize, pageNum, cateName)
+	data := model.GetWebsite(pageSize, pageNum, webName)
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
 			"status": code,
 			"data":   data,
-			//"total":   data.total,
+			//"total":   total,
 			"message": errmsg.GetErrMsg(code),
 		},
 	)
 }
 
-// GetAllCate 查询前台分类列表
-func GetAllCate(c *gin.Context) {
+func GetDefaultWebsite(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	data := model.GetAllCate()
+	data := model.GetDefaultWebsite(id)
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
 			"status": code,
 			"data":   data,
-			//"total":   data.total,
-			"message": errmsg.GetErrMsg(code),
-		},
-	)
-}
-
-// GetCate 查询分类列表
-func GetCateByFid(c *gin.Context) {
-
-	fCateId, _ := strconv.Atoi(c.Query("fcateid"))
-
-	data := model.GetCateByFid(fCateId)
-	code := errmsg.SUCCSE
-	c.JSON(
-		http.StatusOK, gin.H{
-			"status": code,
-			"data":   data,
-			//"total":   data.total,
+			//"total":   total,
 			"message": errmsg.GetErrMsg(code),
 		},
 	)
@@ -116,11 +100,11 @@ func GetCateByFid(c *gin.Context) {
 //}
 
 // EditCate 编辑分类名
-func EditCate(c *gin.Context) {
-	var data model.Category
+func EditWebsite(c *gin.Context) {
+	var data model.Website
 	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
-	code := model.EditCate(id, &data)
+	code := model.EditWebsite(id, &data)
 
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -131,10 +115,10 @@ func EditCate(c *gin.Context) {
 }
 
 // DeleteCate 删除用户
-func DeleteCate(c *gin.Context) {
+func DeleteWebsite(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	code := model.DeleteCate(id)
+	code := model.DeleteWebsite(id)
 
 	c.JSON(
 		http.StatusOK, gin.H{

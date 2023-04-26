@@ -51,11 +51,22 @@ func InitRouter() {
 		auth.DELETE("user/:id", v1.DeleteUser)
 		//修改密码
 		auth.PUT("admin/changepw/:id", v1.ChangeUserPassword)
+		// 网站模块的路由接口
+		auth.GET("admin/website", v1.GetWebsite)
+		auth.POST("website/add", v1.AddWebsite)
+		auth.PUT("website/:id", v1.EditWebsite)
+		auth.DELETE("website/:id", v1.DeleteWebsite)
 		// 分类模块的路由接口
 		auth.GET("admin/category", v1.GetCate)
+		auth.GET("admin/category/f", v1.GetCateByFid)
 		auth.POST("category/add", v1.AddCategory)
 		auth.PUT("category/:id", v1.EditCate)
 		auth.DELETE("category/:id", v1.DeleteCate)
+		// 大分类模块的路由接口
+		auth.GET("admin/f_category", v1.GetFCate)
+		auth.POST("f_category/add", v1.AddFCategory)
+		auth.PUT("f_category/:id", v1.EditFCate)
+		auth.DELETE("f_category/:id", v1.DeleteFCate)
 		// 文章模块的路由接口
 		auth.GET("admin/article/info/:id", v1.GetArtInfo)
 		auth.GET("admin/article", v1.GetArt)
@@ -105,6 +116,10 @@ func InitRouter() {
 		router.GET("comment/info/:id", v1.GetComment)
 		router.GET("commentfront/:id", v1.GetCommentListFront)
 		router.GET("commentcount/:id", v1.GetCommentCount)
+
+		router.GET("category/all", v1.GetAllCate)
+
+		router.GET("website/default/:id", v1.GetDefaultWebsite)
 	}
 
 	_ = r.Run(utils.HttpPort)
