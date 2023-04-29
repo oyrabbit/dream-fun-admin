@@ -1,4 +1,4 @@
-module github.com/wejectchen/ginblog
+module github.com/oyrabbit/dream-fun-admin
 
 go 1.19
 
@@ -14,8 +14,8 @@ require (
 	github.com/qiniu/go-sdk/v7 v7.14.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.9.0
+	github.com/wejectchen/ginblog v0.0.0-20230219052227-2506fc639fd9
 	golang.org/x/crypto v0.6.0
-	golang.org/x/net v0.7.0
 	gopkg.in/ini.v1 v1.67.0
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.5
@@ -27,7 +27,6 @@ require (
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/jonboulle/clockwork v0.2.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
@@ -37,6 +36,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
+	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect

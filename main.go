@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wejectchen/ginblog/model"
-	"github.com/wejectchen/ginblog/routes"
+	"github.com/oyrabbit/dream-fun-admin/model"
+	"github.com/oyrabbit/dream-fun-admin/routes"
 )
 
 func main() {

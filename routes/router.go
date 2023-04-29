@@ -3,8 +3,8 @@ package routes
 import (
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"github.com/wejectchen/ginblog/api/v1"
-	"github.com/wejectchen/ginblog/middleware"
+	"github.com/oyrabbit/dream-fun-admin/api/v1"
+	"github.com/oyrabbit/dream-fun-admin/middleware"
 	"github.com/wejectchen/ginblog/utils"
 )
 
@@ -70,8 +70,8 @@ func InitRouter() {
 		auth.DELETE("user/category/:id", v1.DeleteUserCategory)
 
 		// 网站模块的路由接口
-		auth.GET("user/website", v1.GetUWebsite)
-		auth.POST("user/website/add", v1.AddUserWebsite)
+		auth.GET("user/website", v1.GetWebsites)
+		auth.POST("user/website/add", v1.AddWebsite)
 		auth.PUT("user/website/:id", v1.EditUserWebsite)
 		auth.DELETE("user/website/:id", v1.DeleteUserWebsite)
 

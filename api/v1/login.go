@@ -3,9 +3,9 @@ package v1
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/wejectchen/ginblog/middleware"
-	"github.com/wejectchen/ginblog/model"
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"github.com/oyrabbit/dream-fun-admin/middleware"
+	"github.com/oyrabbit/dream-fun-admin/model"
+	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"time"
 )

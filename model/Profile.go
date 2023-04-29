@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 )
 
 type Profile struct {

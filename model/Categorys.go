@@ -2,10 +2,10 @@ package model
 
 import (
 	"fmt"
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 )
 
-type UserCategory struct {
+type UCategory struct {
 	ID     uint   `gorm:"primary_key;auto_increment" json:"id"`
 	Name   string `gorm:"type:varchar(255);not null" json:"name"`
 	UserId uint   `gorm:"not null" json:"user_id"`

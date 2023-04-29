@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	"github.com/wejectchen/ginblog/utils"
+	"github.com/oyrabbit/dream-fun-admin/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

@@ -2,29 +2,29 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wejectchen/ginblog/model"
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"github.com/oyrabbit/dream-fun-admin/model"
+	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"strconv"
 )
 
-// AddWebsite 添加分类
-func AddUserWebsite(c *gin.Context) {
-	var data model.Website
-	_ = c.ShouldBindJSON(&data)
-	code := model.CheckWebsite(data.Name)
-	if code == errmsg.SUCCSE {
-		model.CreateWebsite(&data)
-	}
-
-	c.JSON(
-		http.StatusOK, gin.H{
-			"status":  code,
-			"data":    data,
-			"message": errmsg.GetErrMsg(code),
-		},
-	)
-}
+//// AddWebsite 添加分类
+//func AddUserWebsite(c *gin.Context) {
+//	var data model.Website
+//	_ = c.ShouldBindJSON(&data)
+//	code := model.CheckWebsite(data.Name)
+//	if code == errmsg.SUCCSE {
+//		model.CreateWebsite(&data)
+//	}
+//
+//	c.JSON(
+//		http.StatusOK, gin.H{
+//			"status":  code,
+//			"data":    data,
+//			"message": errmsg.GetErrMsg(code),
+//		},
+//	)
+//}
 
 //
 //// GetCateInfo 查询分类信息
@@ -44,8 +44,8 @@ func AddUserWebsite(c *gin.Context) {
 //}
 
 // GetCate 查询分类列表
-func GetUWebsite(c *gin.Context) {
-	data := model.GotS()
+func GetWebsites(c *gin.Context) {
+	data := model.GetWebsites()
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
