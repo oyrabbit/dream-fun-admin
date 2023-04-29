@@ -2,7 +2,7 @@ package model
 
 import "C"
 
-type Websites struct {
+type Web struct {
 	ID         uint   `gorm:"primary_key;auto_increment" json:"id"`
 	Name       string `gorm:"type:varchar(255);not null" json:"name"`
 	Url        string `gorm:"type:varchar(255);not null" json:"url"`
