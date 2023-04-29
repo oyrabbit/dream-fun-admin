@@ -1,9 +1,12 @@
 package model
 
 import "C"
+import (
+	"fmt"
+)
 
 type Web struct {
-	ID         uint   `gorm:"primary_key;auto_increment" json:"id"`
+	ID         uint   `gorm:"primary_key;auto_increment;not null" json:"id"`
 	Name       string `gorm:"type:varchar(255);not null" json:"name"`
 	Url        string `gorm:"type:varchar(255);not null" json:"url"`
 	CategoryId uint   `gorm:"not null" json:"category_id"`
@@ -68,10 +71,11 @@ type WebsitesList struct {
 //	}
 
 // GetWebsites 获取网站列表
-func GetWebsites() []WebsitesList {
+func GetDefaultWebsite1(id int) []WebsitesList {
 	var websiteList []WebsitesList
+	fmt.Println(id)
 	username := C.get("username")
-	db.Raw("SELECT t1.id as user_category_id,t1.`name` as user_category_name,t1.user_id,t2.id as user_website_id,t2.`name` as user_website_name, t2.url as user_website_url FROM `user_category` as t1,`user_website` as t2,`user` as t3 WHERE t1.user_id=t3.id AND t1.id=t2.category_id and t3.username=?", username).Scan(&websiteList)
+	db.Raw("SELECT t1.id as user_category_id,t1.`name` as user_category_name,t1.user_id,t2.id as user_website_id,t2.`name` as user_website_name, t2.url as user_website_url FROM `cate` as t1,`web` as t2,`user` as t3 WHERE t1.user_id=t3.id AND t1.id=t2.category_id and t3.username=?", username).Scan(&websiteList)
 	return websiteList
 }
 

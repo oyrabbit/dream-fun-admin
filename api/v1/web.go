@@ -8,6 +8,15 @@ import (
 	"strconv"
 )
 
+type WebsitesList struct {
+	UserCategoryID   uint   `gorm:"primary_key;auto_increment" json:"user_category_id"`
+	UserCategoryName string `gorm:"type:varchar(255);not null" json:"user_category_name"`
+	UserID           uint   `gorm:"primary_key;auto_increment" json:"user_id"`
+	UserWebsiteID    uint   `gorm:"primary_key;auto_increment" json:"user_website_id"`
+	UserWebsiteName  string `gorm:"type:varchar(255);not null" json:"user_website_name"`
+	UserWebsiteUrl   string `gorm:"type:varchar(255);not null" json:"user_website_url"`
+}
+
 //// AddWebsite 添加分类
 //func AddUserWebsite(c *gin.Context) {
 //	var data model.Website
@@ -43,9 +52,9 @@ import (
 //
 //}
 
-// GetCate 查询分类列表
 func GetWebsites(c *gin.Context) {
-	data := model.GetWebsites()
+	id, _ := strconv.Atoi(c.Param("id"))
+	data := model.GetDefaultWebsite1(id)
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
