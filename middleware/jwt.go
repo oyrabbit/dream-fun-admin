@@ -4,8 +4,8 @@ import (
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/wejectchen/ginblog/utils"
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"github.com/oyrabbit/dream-fun-admin/utils"
+	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"strings"
 )
