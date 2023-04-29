@@ -66,6 +66,8 @@ type WebsitesList struct {
 //
 //		return cate
 //	}
+
+// GetWebsites 获取网站列表
 func GetWebsites() []WebsitesList {
 	var websiteList []WebsitesList
 	username := C.get("username")
