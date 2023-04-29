@@ -10,6 +10,15 @@ import (
 	"strconv"
 )
 
+type CustomWebsiteList struct {
+	UserCategoryID   uint   `gorm:"primary_key;auto_increment" json:"user_category_id"`
+	UserCategoryName string `gorm:"type:varchar(255);not null" json:"user_category_name"`
+	UserID           uint   `gorm:"primary_key;auto_increment" json:"user_id"`
+	UserWebsiteID    uint   `gorm:"primary_key;auto_increment" json:"user_website_id"`
+	UserWebsiteName  string `gorm:"type:varchar(255);not null" json:"user_website_name"`
+	UserWebsiteUrl   string `gorm:"type:varchar(255);not null" json:"user_website_url"`
+}
+
 // AddWebsite 添加分类
 func AddWebsite(c *gin.Context) {
 	var data model.Website
