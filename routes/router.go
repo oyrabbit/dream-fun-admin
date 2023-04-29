@@ -62,6 +62,19 @@ func InitRouter() {
 		auth.POST("category/add", v1.AddCategory)
 		auth.PUT("category/:id", v1.EditCate)
 		auth.DELETE("category/:id", v1.DeleteCate)
+
+		// 分类模块的路由接口
+		auth.GET("user/category", v1.GetUserCategory)
+		auth.POST("user/category/add", v1.AddUserCategory)
+		auth.PUT("user/category/:id", v1.EditUserCate)
+		auth.DELETE("user/category/:id", v1.DeleteUserCategory)
+
+		// 网站模块的路由接口
+		auth.GET("user/website", v1.GetUWebsite)
+		auth.POST("user/website/add", v1.AddUserWebsite)
+		auth.PUT("user/website/:id", v1.EditUserWebsite)
+		auth.DELETE("user/website/:id", v1.DeleteUserWebsite)
+
 		// 大分类模块的路由接口
 		auth.GET("admin/f_category", v1.GetFCate)
 		auth.POST("f_category/add", v1.AddFCategory)
