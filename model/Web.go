@@ -71,7 +71,7 @@ type WebsitesList struct {
 //	}
 
 // GetWebsites 获取网站列表
-func GetDefaultWebsite1(id int) []WebsitesList {
+func GetWebsites(id int) []WebsitesList {
 	var websiteList []WebsitesList
 	fmt.Println(id)
 	username := C.get("username")

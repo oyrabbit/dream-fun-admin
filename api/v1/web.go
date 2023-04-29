@@ -54,7 +54,7 @@ type WebsitesList struct {
 
 func GetWebsites(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	data := model.GetDefaultWebsite1(id)
+	data := model.GetWebsites(id)
 	code := errmsg.SUCCSE
 	c.JSON(
 		http.StatusOK, gin.H{
