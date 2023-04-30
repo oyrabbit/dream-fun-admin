@@ -1,20 +1,29 @@
 package v1
 
 import (
+	"dream-fun-admin/middleware"
+	"dream-fun-admin/model"
+	"dream-fun-admin/utils/errmsg"
 	"github.com/gin-gonic/gin"
-	"github.com/oyrabbit/dream-fun-admin/model"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"strconv"
 )
 
 // AddCategory 添加分类
-func AddUserCategory(c *gin.Context) {
-	var data model.Category
+func AddCustomCategory(c *gin.Context) {
+	var data model.CustomCategory
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckCategory(data.Name)
-	if code == errmsg.SUCCSE {
-		model.CreateCate(&data)
+	usernames, status := c.Get("username")
+	usernames1 := usernames.(*middleware.MyClaims)
+	username := usernames1.Username
+	id := c.Param("username")
+	if status {
+	}
+	var code int
+	if username == id {
+		code = model.CreateCustomCategory(&data)
+	} else {
+		code = 1008
 	}
 
 	c.JSON(
@@ -27,85 +36,23 @@ func AddUserCategory(c *gin.Context) {
 }
 
 // GetCate 查询分类列表
-func GetUserCategory(c *gin.Context) {
-	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
-	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
-	cateName := c.Query("catename")
-
-	switch {
-	case pageSize >= 100:
-		pageSize = 100
-	case pageSize <= 0:
-		pageSize = 10
-	}
-
-	if pageNum == 0 {
-		pageNum = 1
-	}
-
-	data := model.GetCate(pageSize, pageNum, cateName)
-	code := errmsg.SUCCSE
+func GetCustomCategory(c *gin.Context) {
+	data, code := model.GetCustomCategory(c)
 	c.JSON(
 		http.StatusOK, gin.H{
-			"status": code,
-			"data":   data,
-			//"total":   data.total,
+			"status":  code,
+			"data":    data,
 			"message": errmsg.GetErrMsg(code),
 		},
 	)
 }
 
-// GetAllCate 查询前台分类列表
-//func GetAllCate(c *gin.Context) {
-//
-//	data := model.GetAllCate()
-//	code := errmsg.SUCCSE
-//	c.JSON(
-//		http.StatusOK, gin.H{
-//			"status": code,
-//			"data":   data,
-//			//"total":   data.total,
-//			"message": errmsg.GetErrMsg(code),
-//		},
-//	)
-//}
-
-// GetCate 查询分类列表
-//func GetCateByFid(c *gin.Context) {
-//
-//	fCateId, _ := strconv.Atoi(c.Query("fcateid"))
-//
-//	data := model.GetCateByFid(fCateId)
-//	code := errmsg.SUCCSE
-//	c.JSON(
-//		http.StatusOK, gin.H{
-//			"status": code,
-//			"data":   data,
-//			//"total":   data.total,
-//			"message": errmsg.GetErrMsg(code),
-//		},
-//	)
-//}
-
-// 查询单个分类
-//func GetCateInfo(c *gin.Context)  {
-//	id, _ := strconv.Atoi(c.Param("id"))
-//
-//	data,code := model.GetCateInfo(id)
-//
-//	c.JSON(http.StatusOK, gin.H{
-//		"status":  code,
-//		"data":    data,
-//		"message": errmsg.GetErrMsg(code),
-//	})
-//}
-
 // EditCate 编辑分类名
-func EditUserCate(c *gin.Context) {
-	var data model.Category
+func EditCustomCate(c *gin.Context) {
+	var data model.CustomCategory
 	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
-	code := model.EditCate(id, &data)
+	code := model.EditCustomCate(c, id, &data)
 
 	c.JSON(
 		http.StatusOK, gin.H{
@@ -116,10 +63,10 @@ func EditUserCate(c *gin.Context) {
 }
 
 // DeleteCate 删除用户
-func DeleteUserCategory(c *gin.Context) {
+func DeleteCustomCategory(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	code := model.DeleteCate(id)
+	code := model.DeleteCustomCate(c, id)
 
 	c.JSON(
 		http.StatusOK, gin.H{

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
+	"dream-fun-admin/utils/errmsg"
 )
 
 type Website struct {

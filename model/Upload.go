@@ -2,8 +2,8 @@ package model
 
 import (
 	"context"
-	"github.com/oyrabbit/dream-fun-admin/utils"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
+	"dream-fun-admin/utils"
+	"dream-fun-admin/utils/errmsg"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
 	"mime/multipart"

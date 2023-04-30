@@ -1,9 +1,9 @@
 package v1
 
 import (
+	"dream-fun-admin/model"
+	"dream-fun-admin/utils/errmsg"
 	"github.com/gin-gonic/gin"
-	"github.com/oyrabbit/dream-fun-admin/model"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"strconv"
 )

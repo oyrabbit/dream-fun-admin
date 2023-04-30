@@ -1,8 +1,10 @@
 package model
 
 import (
+	"dream-fun-admin/middleware"
+	"dream-fun-admin/utils/errmsg"
 	"fmt"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
+	"github.com/gin-gonic/gin"
 )
 
 type CustomCategory struct {
@@ -11,37 +13,18 @@ type CustomCategory struct {
 	UserId uint   `gorm:"not null" json:"user_id"`
 }
 
-//
-//type Result struct {
-//	ID       uint   `gorm:"primary_key;auto_increment" json:"id"`
-//	SName    string `gorm:"type:varchar();not null" json:"s_name"`
-//	FName    string `gorm:"type:varchar();not null" json:"f_name"`
-//	Priority uint   `gorm:"" json:"priority"`
-//	Total    uint   `gorm:"" json:"total"`
-//}
-//
-//type AllCate struct {
-//	FID       uint   `gorm:"primary_key;auto_increment" json:"f_id"`
-//	FName     string `gorm:"type:varchar(255);not null" json:"f_name"`
-//	FPriority uint   `gorm:"" json:"f_priority"`
-//	FIcon     string `gorm:"type:varchar(255);not null" json:"f_icon"`
-//	ID        uint   `gorm:"primary_key;auto_increment" json:"id"`
-//	Name      string `gorm:"type:varchar(255);not null" json:"name"`
-//	Priority  uint   `gorm:"" json:"priority"`
-//}
-
 // CheckCategory 查询分类是否存在
-//func CheckCategory(name string) (code int) {
-//	var cate Category
-//	db.Select("id").Where("name = ?", name).First(&cate)
-//	if cate.ID > 0 {
-//		return errmsg.ERROR_CATENAME_USED //2001
-//	}
-//	return errmsg.SUCCSE
-//}
+func CheckCustomCategory(name string) (code int) {
+	var cate CustomCategory
+	db.Select("id").Where("name = ?", name).First(&cate)
+	if cate.ID > 0 {
+		return errmsg.ERROR_CATENAME_USED //2001
+	}
+	return errmsg.SUCCSE
+}
 
 // CreateCate 新增分类
-func CreateUserCategory(data *Category) int {
+func CreateCustomCategory(data *CustomCategory) int {
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR // 500
@@ -49,58 +32,56 @@ func CreateUserCategory(data *Category) int {
 	return errmsg.SUCCSE
 }
 
-// GetCateInfo 查询单个分类信息
-//func GetCateInfo(id int) (Category, int) {
-//	var cate Category
-//	db.Where("id = ?", id).First(&cate)
-//	return cate, errmsg.SUCCSE
-//}
-
 // GetCate 查询分类列表
-//func GetCate(pageSize int, pageNum int, cateName string) []Result {
-//	var cate []Result
-//	limit := pageSize
-//	offset := (pageNum - 1) * pageSize
-//	db.Raw("SELECT category.id as id, category.name as s_name, f_category.name as f_name, category.priority as priority, temp.total FROM category,f_category,(SELECT COUNT(*) as total from category,f_category WHERE category.f_category_id=f_category.id and category.`name`LIKE ?) as temp WHERE category.f_category_id=f_category.id  and category.`name`LIKE ? LIMIT ? OFFSET ?", "%"+cateName+"%", "%"+cateName+"%", limit, offset).Scan(&cate)
-//	return cate
-//}
-
-// GetCate 查询分类列表
-func GetUserCategory() []AllCate {
-	var cate []AllCate
-	db.Raw("SELECT t1.id as f_id, t1.`name` as f_name, t1.icon as f_icon, t1.priority as f_priority,t2.id as id, t2.`name` as name, t2.priority as priority FROM f_category as t1, category as t2 WHERE t1.id = t2.f_category_id ORDER BY t1.priority DESC,t2.priority DESC").Scan(&cate)
-	return cate
-}
-
-// GetCate 查询分类列表
-func GetCateByUid(fCateId int) []Result {
-	var cate []Result
-	fmt.Println(fCateId)
-	db.Raw("SELECT category.id as id, category.name as s_name, f_category.name as f_name, temp.total FROM category,f_category,(SELECT COUNT(*) as total from category,f_category WHERE category.f_category_id=f_category.id and category.f_category_id=?) as temp WHERE category.f_category_id=f_category.id and category.f_category_id=?", fCateId, fCateId).Scan(&cate)
-	return cate
+func GetCustomCategory(c *gin.Context) ([]CustomCategory, int) {
+	var cate []CustomCategory
+	usernames, status := c.Get("username")
+	if status {
+		usernames1 := usernames.(*middleware.MyClaims)
+		username := usernames1.Username
+		db.Raw("SELECT t1.id as id,t1.`name` as name FROM `custom_category` as t1,`user` as t2 WHERE t1.user_id=t2.id AND t2.username=?", username).Scan(&cate)
+		if err != nil {
+			return cate, errmsg.ERROR
+		}
+		return cate, errmsg.SUCCSE
+	} else {
+		return cate, errmsg.ERROR
+	}
 }
 
 // EditCate 编辑分类信息
-func EditUserCate(id int, data *Category) int {
-	var cate Category
-	var maps = make(map[string]interface{})
-	maps["name"] = data.Name
-	maps["f_category_id"] = data.FCategoryId
-	maps["priority"] = data.Priority
-
-	err = db.Model(&cate).Where("id = ? ", id).Updates(maps).Error
-	if err != nil {
+func EditCustomCate(c *gin.Context, id int, data *CustomCategory) int {
+	var cate CustomCategory
+	usernames, status := c.Get("username")
+	if status {
+		usernames1 := usernames.(*middleware.MyClaims)
+		username := usernames1.Username
+		name := data.Name
+		db.Raw("UPDATE custom_category as t1,`user` as t2 SET t1.`name` = ? WHERE t1.user_id=t2.id AND t2.username=? AND t1.id=?", name, username, id).Scan(&cate)
+		if err != nil {
+			return errmsg.ERROR
+		}
+		return errmsg.SUCCSE
+	} else {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCSE
 }
 
 // DeleteCate 删除分类
-func DeleteUserCate(id int) int {
-	var cate Category
-	err = db.Where("id = ? ", id).Delete(&cate).Error
-	if err != nil {
+func DeleteCustomCate(c *gin.Context, id int) int {
+	var cate CustomCategory
+	usernames, status := c.Get("username")
+	if status {
+		usernames1 := usernames.(*middleware.MyClaims)
+		username := usernames1.Username
+		db.Raw("DELETE t1 FROM custom_website t1,custom_category t2,`user` t3 WHERE t3.username=? AND t2.user_id=t3.id AND t1.category_id=t2.id and t1.category_id=?", username, id).Scan(&cate)
+		db.Raw("DELETE t1 FROM custom_category t1 LEFT JOIN `user` t2 on t1.user_id=t2.id WHERE t2.username=? AND t1.id=?", username, id).Scan(&cate)
+		fmt.Print(cate)
+		if err != nil {
+			return errmsg.ERROR
+		}
+		return errmsg.SUCCSE
+	} else {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCSE
 }

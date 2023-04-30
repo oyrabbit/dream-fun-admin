@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"dream-fun-admin/utils"
+	"dream-fun-admin/utils/errmsg"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/oyrabbit/dream-fun-admin/utils"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"strings"
 )

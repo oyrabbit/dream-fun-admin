@@ -1,11 +1,11 @@
 package routes
 
 import (
+	"dream-fun-admin/api/v1"
+	"dream-fun-admin/middleware"
+	"dream-fun-admin/utils"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"github.com/oyrabbit/dream-fun-admin/api/v1"
-	"github.com/oyrabbit/dream-fun-admin/middleware"
-	"github.com/wejectchen/ginblog/utils"
 )
 
 func createMyRender() multitemplate.Renderer {
@@ -64,16 +64,16 @@ func InitRouter() {
 		auth.DELETE("category/:id", v1.DeleteCate)
 
 		// 分类模块的路由接口
-		auth.GET("user/category", v1.GetUserCategory)
-		auth.POST("user/category/add", v1.AddUserCategory)
-		auth.PUT("user/category/:id", v1.EditUserCate)
-		auth.DELETE("user/category/:id", v1.DeleteUserCategory)
+		auth.GET("user/category", v1.GetCustomCategory)
+		auth.POST("user/category/add/:username", v1.AddCustomCategory)
+		auth.PUT("user/category/:id", v1.EditCustomCate)
+		auth.DELETE("user/category/:id", v1.DeleteCustomCategory)
 
 		// 网站模块的路由接口
 		auth.GET("user/website", v1.GetWebsites)
-		auth.POST("user/website/add", v1.AddWebsite)
-		auth.PUT("user/website/:id", v1.EditUserWebsite)
-		auth.DELETE("user/website/:id", v1.DeleteUserWebsite)
+		auth.POST("user/website/add/:username", v1.AddCustomWebsite)
+		auth.PUT("user/website/:id/:username", v1.EditCustomWebsite)
+		auth.DELETE("user/website/:id/:username", v1.DeleteCustomWebsite)
 
 		// 大分类模块的路由接口
 		auth.GET("admin/f_category", v1.GetFCate)

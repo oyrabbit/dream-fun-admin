@@ -1,8 +1,8 @@
 package model
 
 import (
+	"dream-fun-admin/utils/errmsg"
 	"fmt"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 )
 
 type Category struct {

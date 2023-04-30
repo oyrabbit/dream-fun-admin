@@ -1,8 +1,8 @@
 package model
 
 import (
+	"dream-fun-admin/utils"
 	"fmt"
-	"github.com/oyrabbit/dream-fun-admin/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

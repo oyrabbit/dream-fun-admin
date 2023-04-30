@@ -1,11 +1,11 @@
 package v1
 
 import (
+	"dream-fun-admin/middleware"
+	"dream-fun-admin/model"
+	"dream-fun-admin/utils/errmsg"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/oyrabbit/dream-fun-admin/middleware"
-	"github.com/oyrabbit/dream-fun-admin/model"
-	"github.com/oyrabbit/dream-fun-admin/utils/errmsg"
 	"net/http"
 	"time"
 )
@@ -63,7 +63,7 @@ func setToken(c *gin.Context, user model.User) {
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 100,
 			ExpiresAt: time.Now().Unix() + 604800,
-			Issuer:    "GinBlog",
+			Issuer:    "DreamFun",
 		},
 	}
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/oyrabbit/dream-fun-admin/model"
-	"github.com/oyrabbit/dream-fun-admin/routes"
+	"dream-fun-admin/model"
+	"dream-fun-admin/routes"
 )
 
 func main() {
