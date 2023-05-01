@@ -21,7 +21,7 @@ func EditCustomWebsite(c *gin.Context) {
 	}
 	var code int
 	if username == name {
-		model.EditCustomWebsite(id, &data)
+		code = model.EditCustomWebsite(id, &data)
 	} else {
 		code = 1008
 	}
