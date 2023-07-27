@@ -61,7 +61,7 @@ func GetCate(pageSize int, pageNum int, cateName string) []Result {
 	var cate []Result
 	limit := pageSize
 	offset := (pageNum - 1) * pageSize
-	db.Raw("SELECT category.id as id, category.name as s_name, f_category.name as f_name, category.priority as priority, temp.total FROM category,f_category,(SELECT COUNT(*) as total from category,f_category WHERE category.f_category_id=f_category.id and category.`name`LIKE ?) as temp WHERE category.f_category_id=f_category.id  and category.`name`LIKE ? LIMIT ? OFFSET ?", "%"+cateName+"%", "%"+cateName+"%", limit, offset).Scan(&cate)
+	db.Raw("SELECT category.id as id, category.name as s_name, f_category.name as f_name, category.priority as priority, temp.total FROM category,f_category,(SELECT COUNT(*) as total from category,f_category WHERE category.f_category_id=f_category.id and category.`name`LIKE ?) as temp WHERE category.f_category_id=f_category.id  and category.`name`LIKE ? ORDER BY category.id DESC LIMIT ? OFFSET ?", "%"+cateName+"%", "%"+cateName+"%", limit, offset).Scan(&cate)
 	return cate
 }
 

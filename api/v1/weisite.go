@@ -12,10 +12,7 @@ import (
 func AddWebsite(c *gin.Context) {
 	var data model.Website
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckWebsite(data.Name)
-	if code == errmsg.SUCCSE {
-		model.CreateWebsite(&data)
-	}
+	code := model.CreateWebsite(&data)
 
 	c.JSON(
 		http.StatusOK, gin.H{
