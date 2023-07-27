@@ -75,7 +75,7 @@ func GetWebsite(pageSize int, pageNum int, webName string) []WebsiteList {
 	var websiteList []WebsiteList
 	limit := pageSize
 	offset := (pageNum - 1) * pageSize
-	db.Raw("SELECT website.id as id,website.`name` as name,url,website.priority as priority,website.description as description,category.`name` as category_name,f_category.`name` as f_category_name,temp.total as total FROM website,category,f_category,(SELECT COUNT(*) as total from website,category,f_category  WHERE website.category_id=category.id and f_category.id=category.f_category_id and Website.`name`LIKE ?) as temp WHERE website.category_id=category.id and f_category.id=category.f_category_id and Website.`name`LIKE ? LIMIT ? OFFSET ?", "%"+webName+"%", "%"+webName+"%", limit, offset).Scan(&websiteList)
+	db.Raw("SELECT website.id as id,website.`name` as name,url,website.priority as priority,website.description as description,category.`name` as category_name,f_category.`name` as f_category_name,temp.total as total FROM website,category,f_category,(SELECT COUNT(*) as total from website,category,f_category  WHERE website.category_id=category.id and f_category.id=category.f_category_id and Website.`name`LIKE ?) as temp WHERE website.category_id=category.id and f_category.id=category.f_category_id and Website.`name`LIKE ?  ORDER BY website.id DESC LIMIT ? OFFSET ?", "%"+webName+"%", "%"+webName+"%", limit, offset).Scan(&websiteList)
 	return websiteList
 }
 
